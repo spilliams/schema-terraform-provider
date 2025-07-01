@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/spilliams/schema-terraform-provider/example/blocks"
 	"github.com/spilliams/schema-terraform-provider/pkg/storage/dynamodb"
 )
 
@@ -133,9 +134,9 @@ func (sp *schemaProvider) Configure(ctx context.Context, req provider.ConfigureR
 }
 
 func (schema *schemaProvider) DataSources(_ context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{}
+	return blocks.AllDataSources()
 }
 
 func (schema *schemaProvider) Resources(_ context.Context) []func() resource.Resource {
-	return []func() resource.Resource{}
+	return blocks.AllResources()
 }
