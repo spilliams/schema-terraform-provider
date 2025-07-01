@@ -1,4 +1,4 @@
-module github.com/spilliams/schema-terraform-provider
+module github.com/spilliams/tree-terraform-provider
 
 go 1.23.2
 

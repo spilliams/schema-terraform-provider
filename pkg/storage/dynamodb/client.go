@@ -13,8 +13,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/spilliams/schema-terraform-provider/internal/slug"
-	"github.com/spilliams/schema-terraform-provider/pkg/storage"
+	"github.com/spilliams/tree-terraform-provider/internal/slug"
+	"github.com/spilliams/tree-terraform-provider/pkg/storage"
 )
 
 type Client struct {

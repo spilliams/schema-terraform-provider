@@ -11,8 +11,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/spilliams/schema-terraform-provider/example/blocks"
-	"github.com/spilliams/schema-terraform-provider/pkg/storage/dynamodb"
+	"github.com/spilliams/tree-terraform-provider/example/blocks"
+	"github.com/spilliams/tree-terraform-provider/pkg/storage/dynamodb"
 )
 
 const (
@@ -22,32 +22,32 @@ const (
 	providerAttrKeyARN     = "kms_key_arn"
 )
 
-type schemaProviderModel struct {
+type treeProviderModel struct {
 	AWSProfile types.String `tfsdk:"profile"`
 	AWSRegion  types.String `tfsdk:"region"`
 	TableName  types.String `tfsdk:"table_name"`
 	KMSKeyARN  types.String `tfsdk:"kms_key_arn"`
 }
 
-type schemaProvider struct {
+type treeProvider struct {
 	version string
 	commit  string
 }
 
-var _ provider.Provider = &schemaProvider{}
+var _ provider.Provider = &treeProvider{}
 
 func New(version, commit string) func() provider.Provider {
 	return func() provider.Provider {
-		return &schemaProvider{version, commit}
+		return &treeProvider{version, commit}
 	}
 }
 
-func (sp *schemaProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "schema"
-	resp.Version = fmt.Sprintf("%s-%s", sp.version, sp.commit)
+func (tree *treeProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
+	resp.TypeName = "tree"
+	resp.Version = fmt.Sprintf("%s-%s", tree.version, tree.commit)
 }
 
-func (sp *schemaProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (tree *treeProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Description: "Interact with the information architecture of the engineering platform.",
 		Attributes: map[string]schema.Attribute{
@@ -71,8 +71,8 @@ func (sp *schemaProvider) Schema(_ context.Context, _ provider.SchemaRequest, re
 	}
 }
 
-func (sp *schemaProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-	var config schemaProviderModel
+func (tree *treeProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	var config treeProviderModel
 	diags := req.Config.Get(ctx, &config)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -133,10 +133,10 @@ func (sp *schemaProvider) Configure(ctx context.Context, req provider.ConfigureR
 	resp.ResourceData = client
 }
 
-func (schema *schemaProvider) DataSources(_ context.Context) []func() datasource.DataSource {
+func (tree *treeProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return blocks.AllDataSources()
 }
 
-func (schema *schemaProvider) Resources(_ context.Context) []func() resource.Resource {
+func (tree *treeProvider) Resources(_ context.Context) []func() resource.Resource {
 	return blocks.AllResources()
 }

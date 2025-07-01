@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	exampleprovider "github.com/spilliams/schema-terraform-provider/example/provider"
+	exampleprovider "github.com/spilliams/tree-terraform-provider/example/provider"
 )
 
 var (
@@ -22,7 +22,7 @@ func main() {
 
 	opts := providerserver.ServeOpts{
 		// for development only
-		Address: "demo.leuco.net/terraform-registry/schema",
+		Address: "demo.leuco.net/terraform-registry/tree",
 		Debug:   debug,
 	}
 
